@@ -8,6 +8,6 @@ export default defineConfig({
     vue(),
     tailwindcss(),
 
-
   ],
+  base: "/sess/"
 })
