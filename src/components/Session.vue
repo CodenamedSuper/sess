@@ -15,18 +15,28 @@
 </template>
 
 <script setup lang="ts">
+import { saveCompletedGoal, type GoalData } from '../util/GoalUtils'
 
-var currentGoal : String = localStorage.getItem("goal")!
+
+var currentGoal : String = localStorage.getItem('current_goal')!
 
 
 function cancelSession() {
   localStorage.setItem("isInSession", "false")
+
+  localStorage.removeItem("current_goal")
+  localStorage.removeItem("current_date")
+
   location.reload()
 }
 
 function completeSession() {
   localStorage.setItem("isInSession", "false")
 
+  var goalData : GoalData = {name: localStorage.getItem("current_goal")!,
+   time: new Date().getHours().toLocaleString()! + ":" + (new Date().getMinutes() > 9 ? new Date().getMinutes() : "0" + new Date().getMinutes()!) + " " + (new Date().getHours() >= 12 ? "PM" : "AM"!)  }
+
+  saveCompletedGoal(goalData)
 
   location.reload()
 }

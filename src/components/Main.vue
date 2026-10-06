@@ -15,25 +15,45 @@
 
     <div class="flex flex-col justify-center items-center">
 
+      <h1 class="mt-10 text-xl">Completed goals today: <span class="mt-6 text-xl font-bold">{{ getSavedCompletedGoals().length }}</span> </h1>
+
+
+        <div v-for="goal in getSavedCompletedGoals().reverse()">
+          <DisplayedGoal :name="goal.name" :time="goal.time"></DisplayedGoal>
+        </div>
+
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { getSavedCompletedGoals } from '../util/GoalUtils';
+import DisplayedGoal from './DisplayedGoal.vue';
 
-
-var goal;
+var currGoal : String
 
 function startSession() {
-  goal = (document.getElementById("goalInput") as HTMLInputElement).value;
+  currGoal = (document.getElementById("goalInput") as HTMLInputElement).value;
 
-  if(goal == null || goal.length == 0) return
+  if(currGoal == null || currGoal.length == 0) return
 
-  localStorage.setItem("goal", goal)
+  localStorage.setItem("current_goal", currGoal.toString())
+
   localStorage.setItem("isInSession", "true")
   location.reload()
 
 }
+
+var midnight = new Date();
+midnight.setHours(24,0,0,0);
+
+var now = new Date();
+
+var msToMidnight = midnight.getTime() - now.getTime();
+
+setTimeout(function(){
+  localStorage.removeItem("completed_goals")
+}, msToMidnight);
 
 
 </script>
