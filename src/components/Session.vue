@@ -41,4 +41,15 @@ function completeSession() {
   location.reload()
 }
 
+var midnight = new Date();
+midnight.setHours(24,0,0,0);
+
+var now = new Date();
+
+var msToMidnight = midnight.getTime() - now.getTime();
+
+setTimeout(function(){
+  localStorage.removeItem("completed_goals")
+}, msToMidnight);
+
 </script>
