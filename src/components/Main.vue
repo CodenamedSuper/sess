@@ -32,8 +32,6 @@ import DisplayedGoal from './DisplayedGoal.vue';
 
 var currGoal : String
 
-localStorage.clear()
-
 function startSession() {
   currGoal = (document.getElementById("goalInput") as HTMLInputElement).value;
 
